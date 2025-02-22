@@ -21,6 +21,10 @@ const Calculator = () => {
       setResult('');
       return;
     }
+    if (value === 'DEL') {
+      setResult(result.slice(0, -1)); // Remove last character
+      return;
+    }
     setResult((prev) => {
       if (["+", "-", "*", "/"].includes(value) && ["+", "-", "*", "/"].includes(prev.slice(-1))) {
         return prev.slice(0, -1) + value;
@@ -41,19 +45,32 @@ const Calculator = () => {
         />
       </div>
       <div className="grid grid-cols-4 gap-2">
-        {["7", "8", "9", "+", "4", "5", "6", "-", "1", "2", "3", "/", "0", ".", "=", "*", "C"].map((btn) => (
+        {["7", "8", "9", "+", "4", "5", "6", "-", "1", "2", "3", "/", "0", ".", "=", "*"].map((btn) => (
           <button
             key={btn}
             onClick={() => handleClick(btn)}
             className={`p-4 text-xl font-medium rounded border border-gray-400 transition-all duration-200 ${
               btn === "=" ? "bg-green-500 text-white hover:bg-green-600" :
-              btn === "C" ? "bg-red-500 text-white hover:bg-red-600" :
+              btn === "*" ? "bg-orange-500 text-white hover:bg-orange-700" :
               ["+", "-", "*", "/"].includes(btn) ? "bg-orange-500 text-white hover:bg-orange-700" : "bg-white hover:bg-gray-300"
             }`}
           >
             {btn}
           </button>
         ))}
+        {/* Add the C and DEL buttons */}
+        <button
+          onClick={() => handleClick('C')}
+          className="p-4 text-xl font-medium rounded border border-gray-400 bg-red-500 text-white hover:bg-red-600"
+        >
+          C
+        </button>
+        <button
+          onClick={() => handleClick('DEL')}
+          className="p-4 text-xl font-medium rounded border border-gray-400 bg-yellow-500 text-white hover:bg-yellow-600"
+        >
+          DEL
+        </button>
       </div>
     </div>
   );
